@@ -1,7 +1,6 @@
 FROM arm32v7/ubuntu
 
 ARG GST_VERSION="1.16.0"
-ARG NPROC=8
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN=true
@@ -47,7 +46,7 @@ RUN cd /tmp \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
     --disable-gtk-doc \
- && make -j $NPROC \
+ && make -j`nproc` \
  && make install \
  && cd .. \
  && rm -rvf /gstreamer
@@ -59,7 +58,7 @@ RUN cd /tmp \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
     --disable-gtk-doc \
- && make -j $NPROC \
+ && make -j`nproc` \
  && make install \
  && cd .. \
  && rm -rvf /gst-plugins-base
@@ -71,7 +70,7 @@ RUN cd /tmp \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
     --disable-gtk-doc \
- && make -j $NPROC \
+ && make -j`nproc` \
  && make install \
  && cd .. \
  && rm -rvf /gst-plugins-good
@@ -83,7 +82,7 @@ RUN cd /tmp \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
     --disable-gtk-doc \
- && make -j $NPROC \
+ && make -j`nproc` \
  && make install \
  && cd .. \
  && rm -rvf /gst-plugins-bad
@@ -95,7 +94,7 @@ RUN cd /tmp \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
     --disable-gtk-doc \
- && make -j $NPROC \
+ && make -j`nproc` \
  && make install \
  && cd .. \
  && rm -rvf /gst-plugins-ugly

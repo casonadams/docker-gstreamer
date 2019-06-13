@@ -10,12 +10,10 @@
 
 ## Build
 - GST_VERSION to set which gstreamer version to build
-  - default: "1.16.0"
-- NPROC to set how many cores to use during compiletime (make -j $NPROC)
-  - default: 8
+  - default: 1.16.0
 
 ```bash
-docker-compose build gstreamer -e GST_VERSION="1.16.0" -e NPROC=8
+docker-compose build gstreamer -e GST_VERSION=1.16.0
 ```
 
 ## Usage
