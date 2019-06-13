@@ -18,7 +18,7 @@ docker-compose build gstreamer -e GST_VERSION=1.16.0
 
 ## Usage
 - Currently drops into a shell where GStreamer can be run
-- Projects dir is a shared volume as runtime
+- Projects dir is a shared volume at runtime
 
 ```bash
 docker-compose run gstreamer
