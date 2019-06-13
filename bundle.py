@@ -13,7 +13,7 @@ bin_files = [
 
 root_dirs = set()
 subprocess.call(["mkdir", "-p", "usr/bin/"])
-bin_prefix = "/usr/local/bin/"
+bin_prefix = "/usr/bin/"
 
 for bin in bin_files:
     subprocess.call(["cp", bin_prefix+bin, "usr/bin/"])
@@ -32,8 +32,6 @@ for bin in bin_files:
             f = files[1].split("(")
             system_file_location = f[0].strip()
             file_location = f[0]
-            if 'local' in file_location:
-                file_location = file_location.replace("/local", "").strip()
             if 'arm-linux-gnueabihf' in file_location:
                 file_location = file_location.replace("/arm-linux-gnueabihf", "").strip()
             directory = file_location.split("/")
@@ -48,14 +46,27 @@ for bin in bin_files:
                 subprocess.call(["cp", system_file_location, temp_dir+"/"])
             else:
                 print("File didn't get copied:", file_location)
-        # else:
-        #     print("File didn't get copied:", file_location)
-        #     directory = file_location.split("/")
-        #     temp_dir = directory[1]
-        #     subprocess.call(["mkdir", "-p", temp_dir])
-        #     subprocess.call(["cp", system_file_location, temp_dir+"/"])
+        else:
+            print("File didn't get copied:", file_location)
+            directory = file_location.split("/")
+            temp_dir = directory[1]
+            subprocess.call(["mkdir", "-p", temp_dir])
+            subprocess.call(["cp", system_file_location, temp_dir+"/"])
 
-cmd = ["tar", "czvf", "bundle.tar.gz"]
+subprocess.call(["mkdir", "-p", "usr/lib/gstreamer-1.0/"])
+
+cmd = ["ls", "/usr/lib/gstreamer-1.0/"]
+p = subprocess.check_output(
+        cmd,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True
+    )
+output = p.split("\n")
+
+for file in output:
+    subprocess.call(["cp", "/usr/lib/gstreamer-1.0/" + file, "usr/lib/gstreamer-1.0/"])
+
+cmd = ["tar", "czf", "bundle.tar.gz"]
 cmd += list(root_dirs)
 subprocess.call(cmd)
 

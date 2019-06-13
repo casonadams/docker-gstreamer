@@ -46,6 +46,7 @@ RUN cd /tmp \
  && cd gstreamer \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
+    --prefix=/usr \
     --disable-gtk-doc \
  && make -j`nproc` \
  && make install \
@@ -58,6 +59,7 @@ RUN cd /tmp \
  && cd gst-plugins-base \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
+    --prefix=/usr \
     --disable-gtk-doc \
  && make -j`nproc` \
  && make install \
@@ -70,6 +72,7 @@ RUN cd /tmp \
  && cd gst-plugins-good \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
+    --prefix=/usr \
     --disable-gtk-doc \
  && make -j`nproc` \
  && make install \
@@ -82,6 +85,7 @@ RUN cd /tmp \
  && cd gst-plugins-bad \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
+    --prefix=/usr \
     --disable-gtk-doc \
  && make -j`nproc` \
  && make install \
@@ -94,6 +98,7 @@ RUN cd /tmp \
  && cd gst-plugins-ugly \
  && git checkout $GST_VERSION \
  && ./autogen.sh \
+    --prefix=/usr \
     --disable-gtk-doc \
  && make -j`nproc` \
  && make install \
