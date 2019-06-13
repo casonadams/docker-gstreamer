@@ -17,14 +17,15 @@ RUN apt-get install -y \
     automake \
     autopoint \
     bison \
+    build-essential \
     ca-certificates \
     flex \
     libtool \
     yasm \
     nasm \
     git-core \
-    build-essential \
-    gettext
+    gettext \
+    software-properties-common
 
 # Install dependencies necessary to build GStreamer
 RUN apt-get install -y \
