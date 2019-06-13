@@ -1,12 +1,12 @@
 # docker-gstreamer
 
 ## Setup
-Install Docker Desktop (OSX)
-[Docker Desktop](https://www.docker.com/products/docker-desktop)
+### OSX Install Docker Desktop
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-Install Docker and docker-compose (Linux)
-[docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-[docker-compose](https://docs.docker.com/compose/install/)
+### Linux Install Docker and docker-compose
+- [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+- [docker-compose](https://docs.docker.com/compose/install/)
 
 ## Build
 - GST_VERSION to set which gstreamer version to build
