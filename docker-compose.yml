@@ -2,7 +2,7 @@ version: '3'
 services:
   gstreamer:
     build:
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/arm64v8/Dockerfile
       context: .
     volumes:
       - ./:/home/Projects/
