@@ -1,0 +1,18 @@
+[host_machine]
+system = 'linux'
+cpu_family = 'aarch64'
+cpu = 'arm'
+endian = 'little'
+
+[properties]
+cpp_args = []
+cpp_link_args = []
+pkg_config_libdir = '/usr/local/aarch64/lib/pkgconfig/'
+
+[binaries]
+c = 'aarch64-linux-gnu-gcc'
+cpp = 'aarch64-linux-gnu-g++'
+ar = 'aarch64-linux-gnu-ar'
+ld = 'aarch64-linux-gnu-ld'
+strip = 'aarch64-linux-gnu-strip'
+pkgconfig = 'pkg-config'

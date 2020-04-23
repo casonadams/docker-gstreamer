@@ -1,25 +1,21 @@
-# docker-gstreamer
+# gstreamer-aarch64-builder
+
+This is mostly just an example of how to cross complile gstreamer for aarch64 using the linaro toolchain
+gstreamer files end up in `/usr/local/gst`
+aarch64 files end up in `/usr/local/aarch64`
 
 ## Setup
-### OSX Install Docker Desktop
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-### Linux Install Docker and docker-compose
-- [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-- [docker-compose](https://docs.docker.com/compose/install/)
+- Install [podman](https://podman.io/)
 
 ## Build
-- GST_VERSION to set which gstreamer version to build
-  - default: 1.16.0
 
 ```bash
-docker-compose build gstreamer -e GST_VERSION=1.16.0
+podman build -f Dockerfile -t gstreamer-aarch64-builder .
 ```
 
 ## Usage
-- Currently drops into a shell where GStreamer can be run
-- Projects dir is a shared volume at runtime
 
 ```bash
-docker-compose run gstreamer
+podman run -it gstreamer-aarch64-builder bash
 ```
