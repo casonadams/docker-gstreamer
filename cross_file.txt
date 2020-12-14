@@ -5,9 +5,15 @@ cpu = 'arm'
 endian = 'little'
 
 [properties]
-cpp_args = []
-cpp_link_args = []
+c_args = ['-march=armv8-a', '-mcpu=cortex-a53+crypto', '-mlittle-endian']
 pkg_config_libdir = '/usr/local/aarch64/lib/pkgconfig/'
+sizeof_int = 4
+sizeof_wchar_t = 4
+sizeof_void* = 8
+
+alignment_char = 1
+alignment_void* = 8
+alignment_double = 8
 
 [binaries]
 c = 'aarch64-linux-gnu-gcc'
