@@ -1,12 +1,12 @@
 [host_machine]
 system = 'linux'
 cpu_family = 'aarch64'
-cpu = 'arm'
+cpu = 'armv8-a'
 endian = 'little'
 
 [properties]
 c_args = ['-march=armv8-a', '-mcpu=cortex-a53+crypto', '-mlittle-endian']
-pkg_config_libdir = '/usr/local/aarch64/lib/pkgconfig/'
+pkg_config_libdir = ['/usr/local/aarch64/lib64/pkgconfig:/usr/local/aarch64/lib/pkgconfig']
 sizeof_int = 4
 sizeof_wchar_t = 4
 sizeof_void* = 8
@@ -19,6 +19,6 @@ alignment_double = 8
 c = 'aarch64-linux-gnu-gcc'
 cpp = 'aarch64-linux-gnu-g++'
 ar = 'aarch64-linux-gnu-ar'
-ld = 'aarch64-linux-gnu-ld'
+c_ld = 'gold'
 strip = 'aarch64-linux-gnu-strip'
 pkgconfig = 'pkg-config'
