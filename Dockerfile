@@ -2,7 +2,6 @@ FROM fedora
 
 WORKDIR /tmp
 
-
 # Linaro ARGS
 # https://releases.linaro.org/components/toolchain/binaries/
 ARG LINARO_VERSION="gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu"
@@ -28,21 +27,27 @@ RUN dnf -y install \
     ;
 
 # Install linaro
-ENV PATH=$PATH:/usr/local/$LINARO_VERSION/bin
+ENV PATH=$PATH:/usr/local/$LINARO_VERSION/bin:/usr/local/aarch64/bin
 RUN tar xvf $LINARO_VERSION.tar.xz -C /usr/local
 
-COPY cross_file.txt /tmp/cross_file.txt
-# gstreamer ARGS
-# https://gstreamer.freedesktop.org/
-ARG GSTREAMER_VERSION="1.18.2"
-
-# Util linux ARGS
-# https://github.com/karelzak/util-linux
-ARG UTIL_LINUX_VERSION="2.35.1"
+# util-linux libmount
+ARG UTIL_LINUX_VERSION="v2.36.1"
+RUN git clone https://github.com/karelzak/util-linux.git \
+ && cd util-linux \
+ && git checkout $UTIL_LINUX_VERSION \
+ && ./autogen.sh \
+ && ./configure \
+    --host=aarch64-linux-gnu \
+    --prefix=/usr/local/aarch64 \
+ && make -j`nproc` \
+ && make install -i \
+ ;
 
 # nasm
-RUN git clone --depth=1 https://github.com/netwide-assembler/nasm.git \
+ARG NASM_VERSION="nasm-2.15.05"
+RUN git clone https://github.com/netwide-assembler/nasm.git \
  && cd nasm \
+ && git checkout $NASM_VERSION \
  && ./autogen.sh \
  && ./configure \
     --host=aarch64-linux-gnu \
@@ -51,36 +56,43 @@ RUN git clone --depth=1 https://github.com/netwide-assembler/nasm.git \
  && make install -i \
  ;
 
-# util-linux libmount
-RUN curl -LO https://github.com/karelzak/util-linux/archive/v$UTIL_LINUX_VERSION.tar.gz
-RUN tar xvf v$UTIL_LINUX_VERSION.tar.gz \
- && cd util-linux-$UTIL_LINUX_VERSION \
+# opus
+ARG OPUS_VERSION="v1.3.1"
+RUN git clone https://github.com/xiph/opus.git \
+ && cd opus \
+ && git checkout $OPUS_VERSION \
  && ./autogen.sh \
  && ./configure \
     --host=aarch64-linux-gnu \
     --prefix=/usr/local/aarch64 \
  && make -j`nproc` \
- && make install \
+ && make install -i \
  ;
 
-# TODO: figure out why libmount version is UNKNOWN..0
-RUN sed -i 's/UNKNOWN..0/2.23/g' /usr/local/aarch64/lib/pkgconfig/mount.pc
-
-ENV PATH=$PATH:/usr/local/aarch64/bin
-
+COPY cross_file.txt /tmp/cross_file.txt
+ 
 # gst-build, get and build all of the things
-RUN curl -LO https://github.com/GStreamer/gst-build/archive/$GSTREAMER_VERSION.tar.gz \
- && tar xvf $GSTREAMER_VERSION.tar.gz  \
- && cd gst-build-$GSTREAMER_VERSION \
- && meson \
+ARG GSTREAMER_VERSION="1.18.2"
+RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build.git \
+ && cd gst-build \
+ && git checkout $GSTREAMER_VERSION \
+ && meson  \
+    --strip \
     --cross-file /tmp/cross_file.txt \
     --prefix=/usr/local/gst \
+    -Dauto_features=disabled \
+    -Dgstreamer:tools=enabled \
+    -Dbad=enabled \
+    -Dgst-plugins-bad:opus=enabled \
+    -Dgood=enabled \
+    -Dbase=enabled \
+    -Dgst-plugins-base:opus=enabled \
     _build \
     ;
-RUN cd gst-build-$GSTREAMER_VERSION \
+RUN cd gst-build \
  && ninja -C _build \
  ;
-RUN cd gst-build-$GSTREAMER_VERSION \
+RUN cd gst-build \
  && ninja -C _build install \
  ;
 
