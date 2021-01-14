@@ -85,6 +85,7 @@ RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build.git \
     -Dbad=enabled \
     -Dgst-plugins-bad:opus=enabled \
     -Dgood=enabled \
+    -Dgst-plugins-good:rtsp=enabled \
     -Dbase=enabled \
     -Dgst-plugins-base:opus=enabled \
     _build \
