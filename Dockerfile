@@ -72,7 +72,7 @@ RUN git clone https://github.com/xiph/opus.git \
 COPY cross_file.txt /tmp/cross_file.txt
  
 # gst-build, get and build all of the things
-ARG GSTREAMER_VERSION="1.18.2"
+ARG GSTREAMER_VERSION="1.18.3"
 RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build.git \
  && cd gst-build \
  && git checkout $GSTREAMER_VERSION \
@@ -84,6 +84,8 @@ RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build.git \
     -Dgstreamer:tools=enabled \
     -Dbad=enabled \
     -Dgst-plugins-bad:opus=enabled \
+    -Dgst-plugins-bad:dash=enabled \
+    -Dgst-plugins-bad:videoparsers=enabled \
     -Dgood=enabled \
     -Dgst-plugins-good:rtsp=enabled \
     -Dbase=enabled \
