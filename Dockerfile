@@ -83,12 +83,17 @@ RUN git clone https://gitlab.freedesktop.org/gstreamer/gst-build.git \
     -Dauto_features=disabled \
     -Dgstreamer:tools=enabled \
     -Dbad=enabled \
-    -Dgst-plugins-bad:opus=enabled \
     -Dgst-plugins-bad:dash=enabled \
+    -Dgst-plugins-bad:hls=enabled \
+    -Dgst-plugins-bad:opus=enabled \
     -Dgst-plugins-bad:videoparsers=enabled \
     -Dgood=enabled \
+    -Dgst-plugins-good:audioparsers=enabled \
+    -Dgst-plugins-good:autodetect=enabled \
+    -Dgst-plugins-good:isomp4=enabled \
     -Dgst-plugins-good:rtsp=enabled \
     -Dbase=enabled \
+    -Dgst-plugins-base:app=enabled \
     -Dgst-plugins-base:opus=enabled \
     _build \
     ;
